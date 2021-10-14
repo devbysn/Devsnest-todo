@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css" type="text/css" />
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+
+    <title>Devsnest To-Do</title>
+  </head>
+  <body>
+    <div class="todo-container">
+      <h2>To Do list</h2>
+      <div class="todo">
+        <form action="/todos" method="post" class="todo-header">
+          <input type="text" name="content" id="" />
+          <button type="submit"><span class="fas fa-plus"></span></button>
+        </form>
+        <ul class="todo-list">
+          <% todoTasks.forEach(details=>{ %>
+          <li class="todo-list-item">
+            <div class="todo-list-item-name"><%=details.content %></div>
+            <a href="/todos/edit/<%= details._id %>" class="edit">
+              <span class="fas fa-edit"></span
+            ></a>
+            <a href="/todos/remove/<%= details._id %>" class="remove">
+              <span class="fas fa-trash-alt"></span>
+            </a>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
