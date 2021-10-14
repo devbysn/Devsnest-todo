@@ -23,36 +23,36 @@ app.use(
 );
 
 router.get("/", (req, res) => {
-  res.status(200).render("login");
+  var message = "";
+  res.status(200).render("login", { message: message });
 });
 
 router.post("/", async (req, res, next) => {
   // var message = "";
   var payLoad = req.body;
+  var message = "";
   if (req.body.username && req.body.password) {
     var user = await User.findOne({
       $or: [{ userName: req.body.userName }, { email: req.body.username }],
     }).catch((err) => {
       message = " 🧐 User Doesn;t exists !!";
-      res.status(200).render("login", payLoad);
+      res.status(401).render("login", { message: message });
     });
 
     if (user != null) {
       var result = await bcyrpt.compare(req.body.password, user.password);
 
-      if (result === true) {
+      if (result == true) {
         const token = jwt.sign({ id: user.email }, process.env.TOKEN_SECRET, {
           expiresIn: "18000000s",
         });
-
-        res.cookie(`Cookie token name`, user.email);
         req.session.user = user;
-        res.header("auth", token).status(200).redirect("/todos");
+        res.status(200).redirect("/todos");
       }
     }
 
     message = "Login credentials Invalid !";
-    return res.status(200).render("login", payLoad);
+    return res.status(200).render("login", { message: message });
   }
   message = "Fieds are empty !";
   res.status(200).render("login", { message: message });

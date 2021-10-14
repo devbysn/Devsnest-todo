@@ -4,7 +4,7 @@ body {
   padding: 50px;
   font-family: "Balsamiq Sans", cursive;
   background: #ff8d13; /* fallback for old browsers */
-  color: #fff;
+  color: rgb(0, 0, 0);
 }
 
 .wrapper {
@@ -24,14 +24,14 @@ body {
 }
 
 .login-text {
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-align: center;
   margin-bottom: 30px;
 }
 
 .btn {
   font-size: 1.4rem;
-  color: #fff;
+  color: rgb(0, 0, 0);
   background: #ff8d13;
   padding: 5px;
 }

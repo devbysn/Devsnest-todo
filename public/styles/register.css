@@ -7,6 +7,10 @@ body {
   color: #fff;
 }
 
+.form-signin-heading {
+  text-align: center;
+  font-size: 2rem;
+}
 .wrapper {
   margin-top: 80px;
   margin-bottom: 20px;
@@ -55,4 +59,11 @@ input[type="password"] {
 
 input:focus {
   outline: none;
+}
+
+.form-signin,
+.form-control,
+.form-signin-heading,
+.message {
+  color: rgb(51, 49, 49);
 }

@@ -8,6 +8,11 @@ const jwt = require("jsonwebtoken");
 app.set("view engine", "pug");
 app.set("views", "../views");
 
+//env file
+const dotenv = require("dotenv");
+// get config vars
+dotenv.config();
+
 //body parser
 
 app.use(express.json());
@@ -20,17 +25,17 @@ app.use(
 //GET req
 
 router.get("/", (req, res, next) => {
+  console.log("HELLO 1");
+  var message = "";
   console.log("Register");
-  res.status(200).render("register");
+  res.status(200).render("register", { message: message });
 });
 
 router.post("/", async (req, res) => {
-  //env file
-  const dotenv = require("dotenv");
-  // get config vars
-  dotenv.config();
+  console.log("HELLO 2");
 
   const saltRounds = 10;
+  var message = "";
 
   var name = req.body.name.trim();
   var userName = req.body.userName.trim();
@@ -40,39 +45,37 @@ router.post("/", async (req, res) => {
   var payLoad = req.body;
 
   if (name && userName && email && password) {
+    console.log("HELLO 3");
+
     var user = await User.findOne({
       $or: [{ userName: userName }, { email: email }],
     }).catch((err) => {
-      payLoad.errorMessage = " 🧐 somthing went wrong !!";
-      res.status(200).render("register", payLoad);
+      message = " 🧐 somthing went wrong !!";
+      res.status(200).render("register", { message: message });
     });
 
     if (user == null) {
+      console.log("HELLO 4");
+
       //No user found
       var data = req.body;
       //hash the password
       data.password = await bcrypt.hash(password, saltRounds);
       User.create(data).then((user) => {
-        req.session.user = user;
-        return res.redirect("/todos");
+        return res.status(200).redirect("/todos");
         const token = jwt.sign({ id: user }, process.env.TOKEN_SECRET, {
           expiresIn: "1800000s",
         });
       });
     } else {
       //User found
-      if (email == user.email) {
-        payLoad.errorMessage =
-          " 🧐 use another email id it's already registered !";
-        res.status(200).render("register", payLoad);
-      } else {
-        payLoad.errorMessage = " 🧐 use another username, it's taken !";
-        res.status(200).render("register", payLoad);
-      }
+      console.log("HELLO 5");
+      message = " 🧐 use another email id it's already registered !";
+      res.status(200).render("register", { message: message });
     }
   } else {
-    payLoad.errorMessage = " 🧐 Make sure each field has a value in it.";
-    res.status(200).render("register", payLoad);
+    message = " 🧐 Make sure each field has a value in it.";
+    res.status(200).render("register", { message: message });
   }
 });
 module.exports = router;

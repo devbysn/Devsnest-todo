@@ -18,7 +18,10 @@
           name="Login_Form"
           class="form-signin"
         >
-          <h3 class="login-text">Welcome! Please Sign In</h3>
+          <h3 class="login-text">Welcome ! Please Sign In</h3>
+          <% if(message.length >0 ){ %>
+          <p style="text-align: center"><%=message%></p>
+          <% } else{ %> <% } %>
 
           <input
             type="text"

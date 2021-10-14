@@ -33,7 +33,9 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 
 router.get("/", async (req, res) => {
-  const tasks = await TodoTask.find({});
+  console.log("SEssion 2 : ", req.session);
+  const id = req.session.user._id;
+  const tasks = await TodoTask.find({ postedBy: id });
   res.render("todo", { todoTasks: tasks });
 });
 
@@ -42,6 +44,8 @@ router.post("/", async (req, res) => {
     content: req.body.content,
     postedBy: req.session.user._id,
   });
+
+  console.log("SEssion : ", req.session);
 
   if (!todoTask.content) return res.redirect("/todos");
 
@@ -57,7 +61,9 @@ router.post("/", async (req, res) => {
 
 router.get("/edit/:id", (req, res) => {
   const id = req.params.id;
-  TodoTask.find({}, (err, task) => {
+  const userId = req.session.user._id;
+
+  TodoTask.find({ postedBy: userId }, (err, task) => {
     res.render("todoEdit", { todoTasks: task, idTask: id });
   });
 });

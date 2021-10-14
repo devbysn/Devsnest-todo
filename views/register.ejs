@@ -10,7 +10,11 @@
   <body>
     <div class="container">
       <form class="form-signin" action="/register" method="post">
-        <h2 class="form-signin-heading">Please signup</h2>
+        <h2 class="form-signin-heading">Please signup !!</h2>
+        <% if(message.length >0 ){ %>
+        <p class="message" style="text-align: center"><%=message%></p>
+        <% } else{ %> <% } %>
+
         <label for="inputName" class="sr-only">Name </label>
         <input
           type="text"
