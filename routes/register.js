@@ -43,7 +43,6 @@ router.post("/", async (req, res) => {
     var user = await User.findOne({
       $or: [{ userName: userName }, { email: email }],
     }).catch((err) => {
-      console.log(err);
       payLoad.errorMessage = " 🧐 somthing went wrong !!";
       res.status(200).render("register", payLoad);
     });
@@ -59,7 +58,6 @@ router.post("/", async (req, res) => {
         const token = jwt.sign({ id: user }, process.env.TOKEN_SECRET, {
           expiresIn: "1800000s",
         });
-        console.log("Hello");
       });
     } else {
       //User found
@@ -77,9 +75,4 @@ router.post("/", async (req, res) => {
     res.status(200).render("register", payLoad);
   }
 });
-
-// router.get("*", (req, res) => {
-//   res.status(404).send("404 error");
-// });
-
 module.exports = router;

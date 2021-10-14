@@ -11,14 +11,9 @@ const middleware = require("./middleware");
 const session = require("express-session");
 const favicon = require("serve-favicon");
 
-//DB connection
-
 //Setting up view engine
 app.set("view engine", "ejs");
 app.set("views", "./views");
-
-//Favicon
-// app.use(favicon(path.join(__dirname, "public/favicon_io", "favicon.ico")));
 
 //body parser
 app.use(express.json());
@@ -39,12 +34,7 @@ app.use(
 //loading static resources
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.get("/todos", middleware.requiredLogin, (req, res) => {
-//   res.status(200).redirect("/todos");
-// });
-
-//All routes
-app.use("/todos", todos);
+app.use("/todos", middleware.requiredLogin, todos);
 
 app.use("/login", login);
 
