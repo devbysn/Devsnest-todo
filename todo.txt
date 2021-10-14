@@ -1,0 +1,11 @@
+----------TODO Project------------
+NODEJS, MONGODB, EXPRESS, EJS
+
+-----ROUTES---------
+/login              -----> Login user
+/register           -----> Register new user
+/todos              -----> Read all todos
+/todos/edit/:id     -----> Update all todos
+/todos/remove/:id   -----> Remove a item from todos
+/todos              -----> Post a todo item
+
